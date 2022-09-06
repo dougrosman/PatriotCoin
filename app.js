@@ -81,9 +81,9 @@ function gotResult(error, results) {
   // based on the results from the model classification
 
   if(!patriotConfirmed) {
-    if(results[0].label=="over_heart" && results[0].confidence > 0.8) {
+    if(results[0].label=="over_heart" && results[0].confidence > 0.75) {
       
-      meterHeight+=2;
+      meterHeight+=3;
       if(meterHeight >= height) {
         meterHeight = height;
         $("#patriot-confirmed").show();
@@ -93,7 +93,7 @@ function gotResult(error, results) {
       }
     } else {
         if(meterHeight > 0) {
-          meterHeight-=6;
+          meterHeight-=5;
         }
       }
     }

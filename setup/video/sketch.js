@@ -1,7 +1,7 @@
 let capture;
 let cnv;
-const w = 640;
-const h = 480;
+const w = 320;
+const h = 240;
 let meterHeight = 0;
 
 const GROW_RATE = 2;

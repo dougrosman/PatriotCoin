@@ -1,0 +1,67 @@
+@font-face {
+  font-family: 'Staatliches';
+  src: url('../fonts/Staatliches/Staatliches-Regular.ttf');
+}
+
+*, *::before, *::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+body {
+  font-family: 'Staatliches', cursive;
+}
+
+button {
+  padding: .5em;
+  font-size: 1.125rem;
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loading-icon {
+  display: none;
+  padding: .5rem;
+  border: .325rem solid gray;
+  border-top: .325rem solid lightblue;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  to {transform: rotate(360deg);}
+}
+
+/* p5.js canvas stuff */
+
+#sketch {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+}
+
+video, canvas {
+  display: block;
+  position: absolute;
+  width: 100% !important;
+  height: auto !important;
+  left: 0;
+  top: 0;
+}
+
+video {
+  transform: scaleX(-1);
+  z-index: 0;
+}
+
+canvas {
+  z-index: 1;
+}
+

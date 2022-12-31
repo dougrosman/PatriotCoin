@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../lib/p5-1.5.0.min.js"></script>
+  <script src="../lib/ml5.min.js"></script>
+  <script src="../lib/ethers-5.6.umd.min.js"></script>
+  <script src="abi.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+  <script src="sketch.js" defer></script>
+  <title>Get USACoin Today!</title>
+</head>
+
+<body>
+  <header>
+    <div class="button-container">
+      <button id="connectButton">Connect</button>
+      <span id="loadingIconConnect" class="loading-icon"></span>
+    </div>
+    <p><strong>Connection Status:</strong> <span id="connectionStatus">🔴 Not connected</span></p>
+  </header>
+  <main>
+    <div id="sketch"></div>
+  </main>
+  <footer>
+    <p>&copy; <span id="copyrightYear">2022</span></p>
+  </footer>
+</body>
+
+</html>

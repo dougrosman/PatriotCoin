@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Staatliches';
+  src: url('fonts/Staatliches/Staatliches-Regular.ttf');
+}
+
 *, *::before, *::after {
   padding: 0;
   margin: 0;
@@ -6,9 +11,9 @@
 
 body {
   font-family: 'Staatliches', cursive;
-  color: white;
-  font-weight: 100;
-  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 canvas {
@@ -22,7 +27,6 @@ body:hover {
 #sketch {
   width: clamp(320px, 90vw, 640px);
   height: clamp(240px, 90vw, 480px);
-  /* background: black; */
   margin: 0 auto;
 }
 

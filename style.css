@@ -14,6 +14,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 canvas {
@@ -23,6 +24,15 @@ canvas {
 body:hover {
   cursor: url("cursors/flag-cursor64.png"), pointer;
 }
+
+#connectButton {
+  padding: 1em;
+  font-size: 2rem;
+}
+
+/* footer {
+  text-align: center;
+} */
 
 #sketch {
   width: clamp(320px, 90vw, 640px);
@@ -35,6 +45,12 @@ body:hover {
   margin: 5vmin;
   font-size: 28px;
   position: relative;
+}
+
+footer {
+  text-align: center;
+  margin: 2vmin;
+  font-size: 28px;
 }
 
 .patriotic-text > * {

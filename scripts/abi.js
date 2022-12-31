@@ -1,0 +1,2 @@
+let contractAddress = "";
+let contractABI = [];

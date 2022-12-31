@@ -1,0 +1,23 @@
+* {margin: 0; padding: 0; box-sizing:border-box;}
+
+
+#sketch {
+  position: absolute;
+  width: 100%;
+  max-width: 640px;
+}
+
+video, canvas {
+  display: block;
+  position: absolute;
+  width: 100%;
+}
+
+video {
+  transform: scaleX(-1);
+  z-index: 0;
+}
+
+canvas {
+  z-index: 1;
+}

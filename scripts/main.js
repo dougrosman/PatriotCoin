@@ -107,3 +107,5 @@ async function main() {
 
   // hide the loading icon
   loadingIconConnect.style.display = "none";
+
+}

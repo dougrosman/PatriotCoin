@@ -1,26 +1,3 @@
-////// ETHEREUM SETUP //////
-ethereum.autoRefreshOnNetworkChange = false;
-window.ethereum.enable();
-const provider = new ethers.providers.Web3Provider(window.ethereum);
-const signer = provider.getSigner();
-const contractAddress = "0xa3542ccDAbCE8F7934B278c94680593531019F6B";
-const contractABI = [
-  "function name() public view returns (string memory)",
-  "function symbol() public view returns (string memory)",
-  "function decimals() public view returns (uint8)",
-  "function totalSupply() public view returns (uint256)",
-  "function balanceOf(address account) public view returns (uint256)",
-  "function transfer(address recipient, uint256 amount) public returns (bool)",
-  "function allowance(address owner, address spender) public view returns (uint256)",
-  "function approve(address spender, uint256 amount) public returns (bool)",
-  "function transferFrom(address sender, address recipient, uint256 amount) public returns (bool)",
-  "function increaseAllowance(address spender, uint256 addedValue) public returns (bool)",
-  "function decreaseAllowance(address spender, uint256 subtractedValue) public returns (bool)",
-  "function reward(uint256 amt) public payable"
-];
-const contract = new ethers.Contract(contractAddress, contractABI, provider);
-const tokenWithSigner = contract.connect(signer);
-
 let classifier;
 let imageModelURL = 'models/tm-my-image-model/model.json';
 
@@ -30,6 +7,9 @@ let label = "";
 let meterHeight = 0;
 let drawBackground = false;
 let patriotConfirmed = false;
+
+const w = 320;
+const h = 240;
 
 // Load the model first
 function preload() {

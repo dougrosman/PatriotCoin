@@ -2,7 +2,7 @@
 
 
 #sketch {
-  position: absolute;
+  position: relative;
   width: 100%;
   max-width: 640px;
 }
@@ -10,7 +10,10 @@
 video, canvas {
   display: block;
   position: absolute;
-  width: 100%;
+  width: 100% !important;
+  height: auto !important;
+  left: 0;
+  top: 0;
 }
 
 video {

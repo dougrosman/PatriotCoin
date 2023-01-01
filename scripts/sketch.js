@@ -1,84 +1,81 @@
+// p5 global variables
+let capture;
+let cnv;
+const w = 640;
+const h = 480;
+
+// ml5js global variables
 let classifier;
-let imageModelURL = 'models/tm-my-image-model/model.json';
+const imageModelURL = '../../models/tm-my-image-model/model.json'
 
-let video;
-let flippedVideo;
-let label = "";
+// other global variables
 let meterHeight = 0;
-let drawBackground = false;
-let patriotConfirmed = false;
 
-const w = 320;
-const h = 240;
-
-// Load the model first
 function preload() {
   classifier = ml5.imageClassifier(imageModelURL);
 }
 
 function setup() {
-  let cnv = createCanvas(640, 480);
-  cnv.parent("#sketch");
-  // Create the video
-  video = createCapture(VIDEO);
-  video.size(640, 480);
-  video.hide();
-
-  flippedVideo = ml5.flipImage(video)
-  // Start classifying
-  classifyVideo();
-}
-
-function draw() {
-  if(drawBackground){
-    background(0);
-  }
+  cnv = createCanvas(w, h);
+  cnv.parent('sketch');
   
-  // Draw the video
-  image(flippedVideo, 0, 0);
+  capture = createCapture(VIDEO);
+  capture.size(w, h);
+  capture.id('myCapture')
+  capture.parent('sketch');
 
-  fill(255, 0, 0);
+  pixelDensity(1);
   noStroke();
-  rect(width-20, height-meterHeight, 20, meterHeight);
+  textAlign(CENTER);
+  textSize(24)
+  text("Patriotism Evaluator Loading...", width/2, height/2);
+
+  // classifyVideo();
 }
 
-// Get a prediction for the current video frame
+function windowResized() {
+  const newWidth = min(640, innerWidth);
+  const newHeight = newWidth * 0.75;
+  resizeCanvas(newWidth, newHeight);
+}
+
 function classifyVideo() {
-  flippedVideo = ml5.flipImage(video)
-  classifier.classify(flippedVideo, gotResult);
+  classifier.classify(capture, gotResult);
 }
 
 function gotResult(error, results) {
-  drawBackground = true;
-  // If there is an error
   if (error) {
-    console.error(error);
+    console.error(error)
     return;
   }
+  clear();
+
+  const GROW_RATE = 2;
+  const SHRINK_RATE = 7;
+  const METER_WIDTH = width/8;
   
-  /////////////// CLASSIFICATION INFORMATION ////////////////
-  // this is the section where you'll initiate a transaction
-  // based on the results from the model classification
-
-  if(!patriotConfirmed) {
-    if(results[0].label=="over_heart" && results[0].confidence > 0.75) {
-      
-      meterHeight+=3;
-      if(meterHeight >= height) {
-        meterHeight = height;
-        $("#patriot-confirmed").show();
-        let tx = tokenWithSigner.reward(10);
-        patriotConfirmed = true;
-
-      }
-    } else {
-        if(meterHeight > 0) {
-          meterHeight-=5;
-        }
-      }
+  if(results[0].label == "over_heart" && results[0].confidence > 0.75) {
+    if(meterHeight < height) {
+      meterHeight+=GROW_RATE;
     }
-  
-  label = results[0].label;
-  // Classifiy again!
+  } else {
+    if(meterHeight > 0) {
+      meterHeight-=SHRINK_RATE;
+    }
+  }
+
+  if(meterHeight >= height && !mintingPaused) {
+    contractWithSigner.GIVEUSACOIN();
+    mintingPaused = true;
+  }
+
+  const startColor = color(255, 0, 0);
+  const endColor = color(0, 0, 255);
+  const lerpAmount = map(meterHeight, 0, height, 0, 1);
+  const lerpedColor = lerpColor(startColor, endColor, lerpAmount);
+
+  fill(lerpedColor);
+  rect(width-METER_WIDTH, height-meterHeight, METER_WIDTH, meterHeight);
+
   classifyVideo();
 }

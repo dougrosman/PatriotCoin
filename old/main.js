@@ -1,11 +1,8 @@
-const CONNECT_AUTOMATICALLY = true;
-let contract;
-let signer;
-let contractWithSigner;
-let connected = false;
-let mintingPaused = false;
-
-// copyrightYear.textContent = `${new Date().getFullYear()}`
+/* CONNECT_AUTOMATICALLY
+  true: automatically connect to Web3 Provider on page load.
+  false: enable "click to connect" button
+*/
+const CONNECT_AUTOMATICALLY = false;
 
 if(CONNECT_AUTOMATICALLY) {
   main();
@@ -13,15 +10,16 @@ if(CONNECT_AUTOMATICALLY) {
   connectButton.onclick = main;
 }
 
-
-
 async function main() {
+
+  // INITIALIZAING STEPS (SKIP TO THE BOTTOM TO WRITE YOUR OWN CODE)
+
   loadingIconConnect.style.display = "block";
 
   // Check website compatibility
   if(navigator.userAgent.indexOf("Safari") != -1
   && navigator.userAgent.indexOf("Chrome") == -1) {
-    alert("Please switch to a desktop browser that supports Web3 (Chrome, Firefox, Brave, Edge, or Opera)");
+    alert("Please switch to a browser that supports Web3 (Chrome, Firefox, Brave, Edge, or Opera)");
     loadingIconConnect.style.display = "none";
     return;
   }
@@ -35,6 +33,8 @@ async function main() {
   }
   console.log("MetaMask is installed");
 
+
+  // (REQUIRED) Connect to a Web3 provider (MetaMask in most cases)
   const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
 
   // If the network changes, refresh the page. (e.g. the user switches from mainnet to goerli)
@@ -56,28 +56,56 @@ async function main() {
   }  
   console.log("Wallet connected");
 
+
   // Check if user is signed in to correct network
   const chainId = await provider.getNetwork();
-  if(chainId.chainId != 80001) {
-    alert("Please switch to the Mumbai Polygon Test Network in MetaMask. The page will refresh automatically after switching.");
+  if(chainId.chainId != 5) {
+    alert("Please switch to the Goerli Test Network in MetaMask. The page will refresh automatically after switching.");
     loadingIconConnect.style.display = "none";
+    increaseNumButton.setAttribute("disabled", "true");
     return;
   }
-  console.log("Connected to Mumbai");
+  console.log("Connected to Goerli");
+
+  // AT THIS POINT, THE USER SHOULD BE SUCCESSFULLY CONNECTED TO THE DAPP
+
+  // Update the page to show the user is connected
   connectionStatus.textContent = "🟢 Connected";
+
   connectButton.setAttribute("disabled", "true");
-  signer = provider.getSigner();
-  contract = new ethers.Contract(contractAddress, contractABI, provider);
+  increaseNumButton.removeAttribute("disabled");
+
+  // (REQUIRED) Store the Signer in a variable
+  const signer = provider.getSigner();
+
+  // (REQUIRED) Create a contract object
+  const contract = new ethers.Contract(contractAddress, contractABI, provider);
 
   // (REQUIRED) Connect the signer to the contract
-  contractWithSigner = contract.connect(signer);
+  const contractWithSigner = contract.connect(signer);
 
   // Display the address of the signed-in wallet
   const connectedWalletAddress = await signer.getAddress();
+  connectedWallet.textContent = connectedWalletAddress;
   console.log(`Connected Wallet: ${connectedWalletAddress}`);
+
+
+  // A function to display the wallet's balance
+  async function displayBalance() {
+    
+    let balance = await provider.getBalance(connectedWalletAddress);
+    // Convert balance to a more readable decimal format
+    balance = ethers.utils.formatEther(balance);
+    goerliBalance.textContent = balance;
+
+    if(balance == 0) {
+      goerliBalance.innerHTML+=` (Goerli ETH needed to interact with this contract. Visit <a href="https://goerlifaucet.com/" target="_blank">goerlifaucet.com</a> to get free Goerli ETH.)`;
+    }
+  }
+
+  displayBalance()
 
   // hide the loading icon
   loadingIconConnect.style.display = "none";
-  connected = true;
-}
 
+}

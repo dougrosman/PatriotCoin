@@ -37,6 +37,8 @@ contract USACOIN is ERC20 {
     uint256 MAX_BALANCE = 200 * 10 ** decimals();
     uint256 constant COOLDOWN_TIME = 86400;
 
+    event MintEvent(string message, uint256 amount, uint256 newBalance, uint256 lastMintTime);
+
     constructor() ERC20("USACOIN", "USA") {}
 
     function GIVEUSACOIN() public {
@@ -49,5 +51,10 @@ contract USACOIN is ERC20 {
 
         _mint(msg.sender, amount);
         addressToLastMintTime[msg.sender] = block.timestamp;
+        emit MintEvent("USACOIN RECEIVED", amount, userBalance + amount, addressToLastMintTime[msg.sender]);
+    }
+
+    function getLastMintTime() public view returns (uint256) {
+        return addressToLastMintTime[msg.sender];
     }
 }

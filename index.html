@@ -3,52 +3,46 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="lib/jquery-3.6.1.min.js"></script>
-  <script src="lib/ethers-5.6.umd.min.js"></script>
   <script src="lib/p5-1.5.0.min.js"></script>
   <script src="lib/ml5.min.js"></script>
+  <script src="lib/ethers-5.6.umd.min.js"></script>
 
   <link rel="stylesheet" href="style.css">
 
-  <!-- <script src="scripts/abi.js"></script>
+  <script src="scripts/abi.js"></script>
   <script src="scripts/main.js" defer></script>
-  <script src="scripts/sketch.js" defer></script> -->
+  <script src="scripts/sketch.js" defer></script>
 
-  <title>Prove yourself, patriot!</title>
+  <title>Get USACoin Today!</title>
 </head>
 
 <body>
-  <video autoplay muted loop id="myVideo">
-    <source src="videos/clouds.mp4" type="video/mp4">
-  </video>
-
-  <button id="connectButton">Connect Wallet</button>
-  <header class="patriotic-text">
-    
+  <video id="bgVideo" src="videos/clouds.mp4" autoplay muted loop></video>
+  <div id="connectContainer">
+    <div class="button-container">
+      <button id="connectButton">Connect</button>
+      <span id="loadingIconConnect" class="loading-icon"></span>
+    </div>
+    <p><strong>Connection Status:</strong> <span id="connectionStatus">🔴 Not connected</span></p>
+    <p>USACoin Balance: <span id="usaBalance"></span></p>
+    <p>Time until next redemption: <span id="cooldownTime"></span></p>
+  </div>
+  <header>
     <h1 class="title">Good Day Fellow American!</h1>
-    <h2>Have you shown appreciation for the US of A today?</h2>
+    <p>Have you shown appreciation for the US of A today?</p>
   </header>
   <main>
     <div id="sketch"></div>
-    <div class="patriotic-text flags">
-      <img src="gifs/usa_flag.gif" alt="usa flag gif">
-      <p class="twirl">An ounce of appreciation is an ounce of protein!</p>
-      <img src="gifs/usa_flag.gif" alt="usa flag gif">
-    </div>
-    <div class="patriotic-text">
-      <h3>Make sure you are signed in with your WHID</h4>
-    </div>
+    
+    <img src="gifs/usa_flag.gif" alt="usa flag gif">
+    <p class="twirl">An ounce of appreciation is an ounce of protein!</p>
+    <img src="gifs/usa_flag.gif" alt="usa flag gif">
   </main>
-
-  <h1 id="patriot-confirmed">PATRIOT CONFIRMED</h1>
-
   <footer>
-    <p>&copy; 2023 Doug Rosman</p>
+    <p>&copy; <span id="copyrightYear">2022</span></p>
   </footer>
-
-
-  <!-- <script src="app.js"></script> -->
 </body>
 
 </html>

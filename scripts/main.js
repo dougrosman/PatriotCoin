@@ -83,7 +83,7 @@ async function main() {
 
   setInterval(function(){
     cooldownTime.textContent = unixTimeToHMS((lastMintTime + 86400) - Date.now())
-  }, 10)
+  }, 16)
 
 
   function unixTimeToHMS(unixTime) {
@@ -95,6 +95,12 @@ async function main() {
     return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2) + '.' + milliseconds.substr(-3);
   }
 
-  
+  contract.on("MintEvent", (message, amount, newBalance, lastMintTime) => {
+    console.log(message, amount, newBalance, lastMintTime);
+  });
+
+  mint.onclick = function() {
+    contractWithSigner.GIVEUSACOIN();
+  }
 }
 

@@ -1,4 +1,4 @@
-let contractAddress = "0x6c6Ea96A087D9E6CFfe8718c2c3377c53eDBaDA6";
+let contractAddress = "0xBB28d907AfFB61492000312b93e6455e147e3B36";
 let contractABI = [
 	{
 		"inputs": [],
@@ -275,7 +275,13 @@ let contractABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			}
+		],
 		"name": "getLastMintTime",
 		"outputs": [
 			{
@@ -326,4 +332,4 @@ let contractABI = [
 		"stateMutability": "view",
 		"type": "function"
 	}
-];
+]

@@ -78,25 +78,25 @@ async function main() {
   loadingIconConnect.style.display = "none";
   connected = true;
 
-  usaBalance.textContent = await contract.balanceOf(connectedWallet);
-  const lastMintTime = await contract.getLastMintTime() * 1000;
+  const balance = await contract.balanceOf(connectedWallet);
+  usaBalance.textContent = ethers.utils.formatEther(balance);
+  
+  // setTimeout(function(){
+  //   usaBalance.classList.add("animate__bounceInDown")
+  // },1000)
+  
 
-  setInterval(function(){
-    cooldownTime.textContent = unixTimeToHMS((lastMintTime + 86400) - Date.now())
-  }, 16)
+  const lastMintTime = await contract.getLastMintTime(connectedWallet);
+  const nextMintTime = +lastMintTime + (24 * 60 * 60)
+  console.log(nextMintTime)
+  cooldownTime.textContent = convertTimestamp(nextMintTime);
 
-
-  function unixTimeToHMS(unixTime) {
-    let date = new Date(unixTime * 1000);
-    let hours = date.getHours();
-    let minutes = "0" + date.getMinutes();
-    let seconds = "0" + date.getSeconds();
-    let milliseconds = "0" + date.getMilliseconds();
-    return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2) + '.' + milliseconds.substr(-3);
-  }
-
-  contract.on("MintEvent", (message, amount, newBalance, lastMintTime) => {
-    console.log(message, amount, newBalance, lastMintTime);
+  contract.on("MintEvent", (_message, _amount, _newBalance, _lastMintTime) => {
+    console.log(_message, _amount, _newBalance, _lastMintTime);
+    quarterAudio.volume = 0.6;
+    quarterAudio.play();
+    usaBalance.textContent = ethers.utils.formatEther(_newBalance);
+    usaBalance.classList.add("animate__bounceInDown")
   });
 
   mint.onclick = function() {
@@ -104,3 +104,18 @@ async function main() {
   }
 }
 
+function convertTimestamp(timestamp) {
+  // Create a new JavaScript Date object based on the timestamp
+  // multiplied by 1000 so that the argument is in milliseconds, not seconds.
+  var date = new Date(timestamp * 1000);
+  // Hours part from the timestamp
+  var hours = date.getHours();
+  // Minutes part from the timestamp
+  var minutes = "0" + date.getMinutes();
+  // Seconds part from the timestamp
+  var seconds = "0" + date.getSeconds();
+
+  // Will display time in 10:30:23 format
+  var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+  return formattedTime;
+}

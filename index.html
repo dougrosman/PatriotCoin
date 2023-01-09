@@ -9,16 +9,18 @@
   <script src="lib/ml5.min.js"></script>
   <script src="lib/ethers-5.6.umd.min.js"></script>
 
+  <link rel="stylesheet" href="lib/animate.min.css">
   <link rel="stylesheet" href="style.css">
 
   <script src="scripts/abi.js"></script>
   <script src="scripts/main.js" defer></script>
-  <script src="scripts/sketch.js" defer></script>
+  <!-- <script src="scripts/sketch.js" defer></script> -->
 
   <title>Get USACoin Today!</title>
 </head>
 
 <body>
+  <audio id="quarterAudio" src="sounds/quarter.mp3"></audio>
   <video id="bgVideo" src="videos/clouds.mp4" autoplay muted loop></video>
   <div id="connectContainer">
     <button id="mint">mint</button>
@@ -27,7 +29,7 @@
       <span id="loadingIconConnect" class="loading-icon"></span>
     </div>
     <p><strong>Connection Status:</strong> <span id="connectionStatus">🔴 Not connected</span></p>
-    <p>USACoin Balance: <span id="usaBalance"></span></p>
+    <p>USACoin Balance: <span id="usaBalance" class="animate__animated"></span></p>
     <p>Time until next redemption: <span id="cooldownTime"></span></p>
   </div>
   <header>

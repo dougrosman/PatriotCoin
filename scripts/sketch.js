@@ -30,7 +30,7 @@ function setup() {
   textSize(24)
   text("Patriotism Evaluator Loading...", width/2, height/2);
 
-  // classifyVideo();
+  classifyVideo();
 }
 
 function windowResized() {
@@ -43,18 +43,19 @@ function classifyVideo() {
   classifier.classify(capture, gotResult);
 }
 
-function gotResult(error, results) {
+async function gotResult(error, results) {
   if (error) {
     console.error(error)
     return;
   }
   clear();
 
-  const GROW_RATE = 2;
+  const GROW_RATE = 10;
   const SHRINK_RATE = 7;
   const METER_WIDTH = width/8;
   
-  if(results[0].label == "over_heart" && results[0].confidence > 0.75) {
+  // if(results[0].label == "over_heart" && results[0].confidence > 0.75) {
+  if(true) {
     if(meterHeight < height) {
       meterHeight+=GROW_RATE;
     }
@@ -64,11 +65,6 @@ function gotResult(error, results) {
     }
   }
 
-  if(meterHeight >= height && !mintingPaused) {
-    contractWithSigner.GIVEUSACOIN();
-    mintingPaused = true;
-  }
-
   const startColor = color(255, 0, 0);
   const endColor = color(0, 0, 255);
   const lerpAmount = map(meterHeight, 0, height, 0, 1);
@@ -76,6 +72,20 @@ function gotResult(error, results) {
 
   fill(lerpedColor);
   rect(width-METER_WIDTH, height-meterHeight, METER_WIDTH, meterHeight);
+
+  // do the checks
+
+  if(meterHeight >= height && !mintingPaused) {
+    const time = await contract.getLastMintTime(connectedWallet);
+    const nextTime = +time + (24 * 60 * 60)
+    if(Date.now()/1000 < nextTime) {
+      alert("Please wait until next available redemption time.")
+    } else {
+      patriotConfirmed.style.display = "block";
+      contractWithSigner.GIVEUSACOIN();
+    }
+    mintingPaused = true;
+  }
 
   classifyVideo();
 }

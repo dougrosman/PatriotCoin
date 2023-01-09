@@ -14,38 +14,44 @@
 
   <script src="scripts/abi.js"></script>
   <script src="scripts/main.js" defer></script>
-  <!-- <script src="scripts/sketch.js" defer></script> -->
+  <script src="scripts/sketch.js" defer></script>
 
   <title>Get USACoin Today!</title>
 </head>
 
 <body>
-  <audio id="quarterAudio" src="sounds/quarter.mp3"></audio>
-  <video id="bgVideo" src="videos/clouds.mp4" autoplay muted loop></video>
-  <div id="connectContainer">
-    <button id="mint">mint</button>
-    <div class="button-container">
-      <button id="connectButton">Connect</button>
-      <span id="loadingIconConnect" class="loading-icon"></span>
+  <div id="wrapper">
+    <audio id="quarterAudio" src="sounds/quarter.mp3"></audio>
+    <video id="bgVideo" src="videos/clouds.mp4" autoplay muted loop></video>
+    <div id="connectContainer">
+      <!-- <button id="mint">mint</button> -->
+      <div class="button-container">
+        <button id="connectButton">Connect</button>
+        <span id="loadingIconConnect" class="loading-icon"></span>
+      </div>
+      <p><strong>Connection Status:</strong> <span id="connectionStatus">🔴 Not connected</span></p>
+      <p>USACoin Balance: <span id="usaBalance" class="animate__animated"></span></p>
+      <p>Next available redemption: <span id="cooldownTime"></span></p>
     </div>
-    <p><strong>Connection Status:</strong> <span id="connectionStatus">🔴 Not connected</span></p>
-    <p>USACoin Balance: <span id="usaBalance" class="animate__animated"></span></p>
-    <p>Next available redemption: <span id="cooldownTime"></span></p>
+    <header>
+      <h1 class="title">Good Day Fellow American!</h1>
+      <p>Have you shown appreciation for the US of A today?</p>
+    </header>
+    <main>
+      <div id="sketch"></div>
+
+      <div class="flex">
+        <img src="gifs/usa_flag.gif" alt="usa flag gif">
+        <p class="twirl">An ounce of appreciation is an ounce of protein!</p>
+        <img src="gifs/usa_flag.gif" alt="usa flag gif">
+      </div>
+    </main>
   </div>
-  <header>
-    <h1 class="title">Good Day Fellow American!</h1>
-    <p>Have you shown appreciation for the US of A today?</p>
-  </header>
-  <main>
-    <div id="sketch"></div>
-    
-    <img src="gifs/usa_flag.gif" alt="usa flag gif">
-    <p class="twirl">An ounce of appreciation is an ounce of protein!</p>
-    <img src="gifs/usa_flag.gif" alt="usa flag gif">
-  </main>
   <footer>
     <p>&copy; <span id="copyrightYear">2022</span></p>
   </footer>
+
+  <p id="patriotConfirmed">PATRIOTISM CONFIRMED</p>
 </body>
 
 </html>

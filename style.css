@@ -12,6 +12,19 @@
 
 body {
   font-family: 'Staatliches', cursive;
+  text-align: center;
+  max-width: 800px;
+  min-height: 100vh;
+  margin-inline: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#wrapper {
+  flex-grow: 1;
+  min-height: 800px;
 }
 
 #bgVideo {
@@ -39,6 +52,15 @@ button {
   flex-wrap: wrap;
   align-items: center;
   gap: 1rem;
+  width: max-content;
+  margin-inline: auto;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
 }
 
 .loading-icon {
@@ -61,6 +83,7 @@ button {
   width: 100%;
   height: max-content;
   max-width: 640px;
+  margin-inline: auto;
 }
 
 #myCapture, canvas {
@@ -82,3 +105,21 @@ canvas {
   z-index: 1;
 }
 
+#patriotConfirmed {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 22vmin;
+  color: red;
+  -webkit-text-stroke: 3px white;
+  text-align: center;
+  animation: confirmed .8s infinite linear;
+  display: none;
+  z-index: 100;
+}
+
+@keyframes confirmed {
+  0% {color: red; transform: translate(-50%, -50%) scale(1)}
+  50% {color: white; transform: translate(-50%, -50%) scale(1.05)}
+}

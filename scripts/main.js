@@ -3,6 +3,7 @@ let contract;
 let signer;
 let contractWithSigner;
 let connected = false;
+let connectedWallet;
 let mintingPaused = false;
 
 // copyrightYear.textContent = `${new Date().getFullYear()}`
@@ -71,7 +72,7 @@ async function main() {
   contractWithSigner = contract.connect(signer);
 
   // Display the address of the signed-in wallet
-  const connectedWallet = await signer.getAddress();
+  connectedWallet = await signer.getAddress();
   console.log(`Connected Wallet: ${connectedWallet}`);
 
   // hide the loading icon
@@ -94,15 +95,15 @@ async function main() {
     displayRedeemTime();
   });
 
-  mint.onclick = async function() {
-    const time = await contract.getLastMintTime(connectedWallet);
-    const nextTime = +time + (24 * 60 * 60)
-    if(Date.now()/1000 < nextTime) {
-      alert("Please wait until next available redemption time")
-    } else {
-      contractWithSigner.GIVEUSACOIN();
-    }
-  }
+  // mint.onclick = async function() {
+  //   const time = await contract.getLastMintTime(connectedWallet);
+  //   const nextTime = +time + (24 * 60 * 60)
+  //   if(Date.now()/1000 < nextTime) {
+  //     alert("Please wait until next available redemption time")
+  //   } else {
+  //     contractWithSigner.GIVEUSACOIN();
+  //   }
+  // }
 
   function convertTimestamp(timestamp) {
     let date = new Date(timestamp * 1000);

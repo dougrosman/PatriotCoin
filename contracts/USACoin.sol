@@ -35,7 +35,7 @@ contract USACOIN is ERC20 {
     mapping(address => uint256) private addressToLastMintTime;
     uint256 DAILY_ALLOWANCE = 25 * 10 ** decimals();
     uint256 MAX_BALANCE = 200 * 10 ** decimals();
-    uint256 constant COOLDOWN_TIME = 86400;
+    uint256 constant COOLDOWN_TIME = 86400; // 24 hours
 
     event MintEvent(string message, uint256 amount, uint256 newBalance, uint256 lastMintTime);
 
@@ -54,7 +54,7 @@ contract USACOIN is ERC20 {
         emit MintEvent("USACOIN RECEIVED", amount, userBalance + amount, addressToLastMintTime[msg.sender]);
     }
 
-    function getLastMintTime() public view returns (uint256) {
-        return addressToLastMintTime[msg.sender];
+    function getLastMintTime(address _addr) public view returns (uint256) {
+        return addressToLastMintTime[_addr];
     }
 }

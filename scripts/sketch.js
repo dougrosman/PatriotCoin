@@ -18,7 +18,7 @@ function preload() {
 function setup() {
   cnv = createCanvas(w, h);
   cnv.parent('sketch');
-  
+
   capture = createCapture(VIDEO);
   capture.size(w, h);
   capture.id('myCapture')
@@ -27,22 +27,13 @@ function setup() {
   pixelDensity(1);
   noStroke();
   push()
-    rectMode(CENTER);
-    rect(width/2, height/2, width, height);
+  rectMode(CENTER);
+  rect(width / 2, height / 2, width, height);
   pop()
   textAlign(CENTER);
   textSize(24);
-  text("Please connect to begin evaluation", width/2, height/2);
-
-  // if(startEvaluator) {
-  //   console.log("ok")
-    
-  // }
+  text("Please connect to begin evaluation", width / 2, height / 2);
 }
-
-// connectButton.onclick = function() {
-//   classifyVideo();
-// }
 
 function windowResized() {
   const newWidth = min(640, innerWidth);
@@ -63,16 +54,16 @@ async function gotResult(error, results) {
 
   const GROW_RATE = 10;
   const SHRINK_RATE = 7;
-  const METER_WIDTH = width/8;
-  
+  const METER_WIDTH = width / 8;
+
   // if(results[0].label == "over_heart" && results[0].confidence > 0.75 && !mintingPaused) {
-  if(true) {
-    if(meterHeight < height) {
-      meterHeight+=GROW_RATE;
+  if (true) {
+    if (meterHeight < height) {
+      meterHeight += GROW_RATE;
     }
   } else {
-    if(meterHeight > 0) {
-      meterHeight-=SHRINK_RATE;
+    if (meterHeight > 0) {
+      meterHeight -= SHRINK_RATE;
     }
   }
 
@@ -82,23 +73,23 @@ async function gotResult(error, results) {
   const lerpedColor = lerpColor(startColor, endColor, lerpAmount);
 
   fill(lerpedColor);
-  rect(width-METER_WIDTH, height-meterHeight, METER_WIDTH, meterHeight);
+  rect(width - METER_WIDTH, height - meterHeight, METER_WIDTH, meterHeight);
 
   // do the checks
 
-  if(meterHeight >= height && !mintingPaused) {
+  if (meterHeight >= height && !mintingPaused) {
     patriotConfirmed.style.display = "block";
     mintingPaused = true;
-    const time = await contract.getLastMintTime(connectedWallet);
-    const nextTime = +time + (24 * 60 * 60)
-    if(Date.now()/1000 < nextTime) {
-      // alert("Please wait until next available redemption time.")
-    } else {
-      if(connected) {
+    if (connected) {
+      const time = await contract.getLastMintTime(connectedWallet);
+      const nextTime = +time + (24 * 60 * 60)
+      if (Date.now() / 1000 < nextTime) {
+        alert("Please wait until next available redemption time.")
+      } else {
         contractWithSigner.GIVEUSACOIN();
       }
     }
-    
+
   }
 
   classifyVideo();

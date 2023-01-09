@@ -20,27 +20,31 @@
 </head>
 
 <body>
-  <div id="wrapper">
     <audio id="quarterAudio" src="sounds/quarter.mp3"></audio>
     <video id="bgVideo" src="videos/clouds.mp4" autoplay muted loop></video>
-    <div id="connectContainer">
-      <!-- <button id="mint">mint</button> -->
-      <div class="button-container">
-        <button id="connectButton">Connect</button>
-        <span id="loadingIconConnect" class="loading-icon"></span>
-      </div>
-      <p><strong>Connection Status:</strong> <span id="connectionStatus">🔴 Not connected</span></p>
-      <p>USACoin Balance: <span id="usaBalance" class="animate__animated"></span></p>
-      <p>Next available redemption: <span id="cooldownTime"></span></p>
-    </div>
+    
     <header>
-      <h1 class="title">Good Day Fellow American!</h1>
-      <p>Have you shown appreciation for the US of A? Confirm your patriotism to receive your free USACoin.</p>
+      <h1 class="title patriotic">Good Day Fellow American!</h1>
+      <p class="patriotic">Have you shown appreciation for the US of A today?</p>
+      <p class="patriotic">Confirm your patriotism to receive your free USACoin.</p>
     </header>
     <main>
+      <div id="connectContainer">
+        <!-- <button id="mint">mint</button> -->
+        <div class="button-container">
+          <button id="connectButton">Connect</button>
+          <span id="loadingIconConnect" class="loading-icon"></span>
+        </div>
+        <div class="background-box">
+
+          <p><strong>Connection Status:</strong> <span id="connectionStatus">🔴 Not connected</span></p>
+          <p>USACoin Balance: <span id="usaBalance" class="animate__animated">please connect</span></p>
+          <p>Next available redemption: <span id="cooldownTime">please connect</span></p>
+        </div>
+      </div>
       <div id="sketch"></div>
 
-      <div>
+      <div class="background-box">
         <p>1. Enable your webcam</p>
         <p>2. Position yourself in frame</p>
         <p>3. Place right hand over heart</p>
@@ -49,17 +53,18 @@
 
       <div class="flex">
         <img src="gifs/usa_flag.gif" alt="usa flag gif">
-        <p class="twirl">An ounce of appreciation is an ounce of protein!</p>
+        <p class="twirl patriotic">An ounce of appreciation is an ounce of protein!</p>
         <img src="gifs/usa_flag.gif" alt="usa flag gif">
       </div>
-      <p>USACoin is accepted at all American-owned retail stores</p>
+      <p style="margin-block: 2em;">USACoin is accepted at all American-owned retail stores</p>
     </main>
-  </div>
   <footer>
     <p>&copy; <span id="copyrightYear"></span></p>
   </footer>
 
-  <p id="patriotConfirmed">PATRIOTISM CONFIRMED</p>
+  <div id="patriotConfirmed" class="fade-out">
+    <p class="confirmed">PATRIOTISM CONFIRMED</p>
+  </div>
 </body>
 
 </html>

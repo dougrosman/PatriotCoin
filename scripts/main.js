@@ -20,7 +20,7 @@ async function main() {
   // Check website compatibility
   if(navigator.userAgent.indexOf("Safari") != -1
   && navigator.userAgent.indexOf("Chrome") == -1) {
-    alert("Please switch to a desktop browser that supports Web3 (Chrome, Firefox, Brave, Edge, or Opera)");
+    alert("Please switch to Chrome");
     loadingIconConnect.style.display = "none";
     return;
   }
@@ -28,8 +28,9 @@ async function main() {
 
   // Check if MetaMask is installed
   if(!window.ethereum) {
-    alert("No Web3 Provider detected, please install MetaMask (https://metamask.io)");
+    alert("No Web3 Provider detected. You can interact with the patriotism evaluator, but you will not receive any USACoin. Please install MetaMask to receive USACoin (https://metamask.io).");
     loadingIconConnect.style.display = "none";
+    classifyVideo();
     return;
   }
   console.log("MetaMask is installed");
@@ -78,12 +79,13 @@ async function main() {
   // hide the loading icon
   loadingIconConnect.style.display = "none";
   connected = true;
-  classifyVideo();
-
+  displayRedeemTime();
+  
   const balance = await contract.balanceOf(connectedWallet);
   usaBalance.textContent = ethers.utils.formatEther(balance);
   
-  displayRedeemTime();
+  
+  classifyVideo();
   
   // EVENTS
 

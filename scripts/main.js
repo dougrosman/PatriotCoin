@@ -81,15 +81,9 @@ async function main() {
   const balance = await contract.balanceOf(connectedWallet);
   usaBalance.textContent = ethers.utils.formatEther(balance);
   
-  // setTimeout(function(){
-  //   usaBalance.classList.add("animate__bounceInDown")
-  // },1000)
+  displayRedeemTime();
   
-
-  const lastMintTime = await contract.getLastMintTime(connectedWallet);
-  const nextMintTime = +lastMintTime + (24 * 60 * 60)
-  console.log(nextMintTime)
-  cooldownTime.textContent = convertTimestamp(nextMintTime);
+  // EVENTS
 
   contract.on("MintEvent", (_message, _amount, _newBalance, _lastMintTime) => {
     console.log(_message, _amount, _newBalance, _lastMintTime);
@@ -97,25 +91,32 @@ async function main() {
     quarterAudio.play();
     usaBalance.textContent = ethers.utils.formatEther(_newBalance);
     usaBalance.classList.add("animate__bounceInDown")
+    displayRedeemTime();
   });
 
-  mint.onclick = function() {
-    contractWithSigner.GIVEUSACOIN();
+  mint.onclick = async function() {
+    const time = await contract.getLastMintTime(connectedWallet);
+    const nextTime = +time + (24 * 60 * 60)
+    if(Date.now()/1000 < nextTime) {
+      alert("Please wait until next available redemption time")
+    } else {
+      contractWithSigner.GIVEUSACOIN();
+    }
   }
-}
 
-function convertTimestamp(timestamp) {
-  // Create a new JavaScript Date object based on the timestamp
-  // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-  var date = new Date(timestamp * 1000);
-  // Hours part from the timestamp
-  var hours = date.getHours();
-  // Minutes part from the timestamp
-  var minutes = "0" + date.getMinutes();
-  // Seconds part from the timestamp
-  var seconds = "0" + date.getSeconds();
-
-  // Will display time in 10:30:23 format
-  var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-  return formattedTime;
+  function convertTimestamp(timestamp) {
+    let date = new Date(timestamp * 1000);
+    return date.toLocaleString();
+  }
+  
+  async function displayRedeemTime() {
+    const lastMintTime = await contract.getLastMintTime(connectedWallet);
+    const nextMintTime = +lastMintTime + (24 * 60 * 60)
+    
+    if(Date.now()/1000 > nextMintTime) {
+      cooldownTime.textContent = "Eligible to redeem"
+    } else {
+      cooldownTime.textContent = convertTimestamp(nextMintTime);
+    }
+  }
 }

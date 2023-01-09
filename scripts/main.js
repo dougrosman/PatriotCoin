@@ -1,4 +1,4 @@
-const CONNECT_AUTOMATICALLY = true;
+const CONNECT_AUTOMATICALLY = false;
 let contract;
 let signer;
 let contractWithSigner;
@@ -6,7 +6,7 @@ let connected = false;
 let connectedWallet;
 let mintingPaused = false;
 
-// copyrightYear.textContent = `${new Date().getFullYear()}`
+copyrightYear.textContent = `${new Date().getFullYear()}`
 
 if(CONNECT_AUTOMATICALLY) {
   main();
@@ -78,6 +78,7 @@ async function main() {
   // hide the loading icon
   loadingIconConnect.style.display = "none";
   connected = true;
+  classifyVideo();
 
   const balance = await contract.balanceOf(connectedWallet);
   usaBalance.textContent = ethers.utils.formatEther(balance);

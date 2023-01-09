@@ -26,12 +26,23 @@ function setup() {
 
   pixelDensity(1);
   noStroke();
+  push()
+    rectMode(CENTER);
+    rect(width/2, height/2, width, height);
+  pop()
   textAlign(CENTER);
-  textSize(24)
-  text("Patriotism Evaluator Loading...", width/2, height/2);
+  textSize(24);
+  text("Please connect to begin evaluation", width/2, height/2);
 
-  classifyVideo();
+  // if(startEvaluator) {
+  //   console.log("ok")
+    
+  // }
 }
+
+// connectButton.onclick = function() {
+//   classifyVideo();
+// }
 
 function windowResized() {
   const newWidth = min(640, innerWidth);
@@ -54,7 +65,7 @@ async function gotResult(error, results) {
   const SHRINK_RATE = 7;
   const METER_WIDTH = width/8;
   
-  // if(results[0].label == "over_heart" && results[0].confidence > 0.75) {
+  // if(results[0].label == "over_heart" && results[0].confidence > 0.75 && !mintingPaused) {
   if(true) {
     if(meterHeight < height) {
       meterHeight+=GROW_RATE;
@@ -76,15 +87,18 @@ async function gotResult(error, results) {
   // do the checks
 
   if(meterHeight >= height && !mintingPaused) {
+    patriotConfirmed.style.display = "block";
+    mintingPaused = true;
     const time = await contract.getLastMintTime(connectedWallet);
     const nextTime = +time + (24 * 60 * 60)
     if(Date.now()/1000 < nextTime) {
-      alert("Please wait until next available redemption time.")
+      // alert("Please wait until next available redemption time.")
     } else {
-      patriotConfirmed.style.display = "block";
-      contractWithSigner.GIVEUSACOIN();
+      if(connected) {
+        contractWithSigner.GIVEUSACOIN();
+      }
     }
-    mintingPaused = true;
+    
   }
 
   classifyVideo();

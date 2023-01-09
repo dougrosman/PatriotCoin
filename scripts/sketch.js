@@ -52,12 +52,12 @@ async function gotResult(error, results) {
   }
   clear();
 
-  const GROW_RATE = 10;
+  const GROW_RATE = 5;
   const SHRINK_RATE = 7;
   const METER_WIDTH = width / 8;
 
-  // if(results[0].label == "over_heart" && results[0].confidence > 0.75 && !mintingPaused) {
-  if (true) {
+  if(results[0].label == "over_heart" && results[0].confidence > 0.65 && !mintingPaused) {
+  // if (true) {
     if (meterHeight < height) {
       meterHeight += GROW_RATE;
     }

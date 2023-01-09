@@ -13,7 +13,7 @@
 body {
   font-family: 'Staatliches', cursive;
   text-align: center;
-  max-width: 800px;
+  max-width: 850px;
   min-height: 100vh;
   margin-inline: auto;
   padding: .5rem;
@@ -164,7 +164,7 @@ canvas {
 }
 
 .title {
-  font-size: 4rem;
+  font-size: 8rem;
 }
 
 .twirl {

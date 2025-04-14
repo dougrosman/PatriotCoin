@@ -18,17 +18,17 @@ async function main() {
   loadingIconConnect.style.display = "block";
 
   // Check website compatibility
-  if(navigator.userAgent.indexOf("Safari") != -1
-  && navigator.userAgent.indexOf("Chrome") == -1) {
-    alert("Please switch to Chrome");
-    loadingIconConnect.style.display = "none";
-    return;
-  }
-  console.log("Browser is Web3 compatible");
+  // if(navigator.userAgent.indexOf("Safari") != -1
+  // && navigator.userAgent.indexOf("Chrome") == -1) {
+  //   alert("Please switch to Chrome");
+  //   loadingIconConnect.style.display = "none";
+  //   return;
+  // }
+  // console.log("Browser is Web3 compatible");
 
   // Check if MetaMask is installed
   if(!window.ethereum) {
-    alert("No Web3 Provider detected. You can interact with the patriotism evaluator, but you will not receive any USACoin. Please install MetaMask to receive USACoin (https://metamask.io).");
+    alert("No Web3 Provider detected. You can interact with the patriotism evaluator, but you will not receive any USACoin. Please install MetaMask to receive USACoin (https://metamask.io). Metamask is not available in Safari");
     loadingIconConnect.style.display = "none";
     classifyVideo();
     return;
@@ -52,18 +52,20 @@ async function main() {
     console.error(errorMessage, error);
     alert(errorMessage);
     loadingIconConnect.style.display = "none";
+    classifyVideo();
     return;
   }  
   console.log("Wallet connected");
 
   // Check if user is signed in to correct network
   const chainId = await provider.getNetwork();
-  if(chainId.chainId != 80001) {
-    alert("Please switch to the Mumbai Polygon Test Network in MetaMask. The page will refresh automatically after switching.");
+  if(chainId.chainId != 11155111) {
+    alert("Please switch to the Sepolia Ethereum Test Network in MetaMask. The page will refresh automatically after switching.");
     loadingIconConnect.style.display = "none";
+    classifyVideo();
     return;
   }
-  console.log("Connected to Mumbai");
+  console.log("Connected to Sepolia");
   connectionStatus.textContent = "🟢 Connected";
   connectButton.setAttribute("disabled", "true");
   signer = provider.getSigner();
